@@ -1,0 +1,5 @@
+kibana:
+  container_name: kibana
+  build: ./
+  ports:
+    - "0:0"

@@ -1,0 +1,5 @@
+mysql:
+  container_name: mysql
+  build: ./
+  ports:
+    - "3306:3306"

@@ -1,0 +1,6 @@
+mailcatcher:
+  container_name: mailcatcher
+  build: ./
+  ports:
+    - "1025:1025"
+    - "1080:1080"

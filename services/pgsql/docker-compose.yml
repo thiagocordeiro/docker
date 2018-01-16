@@ -1,0 +1,5 @@
+pgsql:
+  container_name: pgsql
+  build: ./
+  ports:
+    - "5432:5432"
