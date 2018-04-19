@@ -21,6 +21,13 @@ ADD build/.bashrc /root/.bashrc
 
 # bitcoind
 
+RUN echo '* * * * * ( sleep 1; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+RUN echo '* * * * * ( sleep 11; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+RUN echo '* * * * * ( sleep 21; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+RUN echo '* * * * * ( sleep 31; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+RUN echo '* * * * * ( sleep 41; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+RUN echo '* * * * * ( sleep 51; make /root generate BLOCKS=10 )' >> /var/spool/cron/crontabs/root
+
 RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:bitcoin/bitcoin

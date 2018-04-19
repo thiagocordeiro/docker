@@ -9,9 +9,8 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
-RUN apt-get update
-RUN apt-get -y upgrade
 RUN apt-get update --fix-missing
+RUN apt-get upgrade -y
 RUN apt-get install nano
 
 RUN echo 'LC_ALL=en_US.UTF-8' >> /etc/environment

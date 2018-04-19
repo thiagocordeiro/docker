@@ -59,7 +59,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e[1;36m\]docker@mailcatcher|\[\e[0m\]$PS1"
+    PS1="\[\e[1;36m\]docker@kibana|\[\e[0m\]$PS1"
     ;;
 *)
     ;;

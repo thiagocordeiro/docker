@@ -20,7 +20,6 @@ RUN echo 'LC_CTYPE=en_US.UTF-8' >> /etc/environment
 ADD build/.bashrc /root/.bashrc
 
 # php-nginx
-
 RUN update-rc.d -f apache2 remove
 RUN apt-get install -y nginx-full
 ADD build/nginx.conf /etc/nginx/sites-available/default
