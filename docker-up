@@ -1,0 +1,22 @@
+#!/bin/bash
+
+COLOR_CYAN='\033[1;36m'
+COLOR_OFF='\033[0m'
+
+containers=$(docker ps -aq | tail -r)
+
+echo ""
+echo -e "${COLOR_CYAN}Starting containers${COLOR_OFF}"
+docker start $containers
+
+echo ""
+echo -e "${COLOR_CYAN}configuring loopback network${COLOR_OFF}"
+for container in $containers
+do
+    name=$(docker inspect $container | jq '.[0] | .Name' | tr -d \"  | tr -d \/)
+    ip=$(docker inspect $container | jq '.[0] | .NetworkSettings.IPAddress' | tr -d \"  | tr -d \/)
+    sudo ifconfig lo0 alias $ip
+    echo -e "${name}: ${ip}"
+done
+
+echo ""
