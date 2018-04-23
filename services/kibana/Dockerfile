@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 RUN apt-get update --fix-missing && apt-get upgrade -y
-RUN apt-get install nano wget
+RUN apt-get install nano unzip wget
 
 RUN echo 'LC_ALL=en_US.UTF-8' >> /etc/environment
 RUN echo 'LANG=en_US.UTF-8' >> /etc/environment
@@ -36,8 +36,11 @@ RUN echo 'deb http://packages.elastic.co/logstash/2.2/debian stable main' | tee 
 RUN apt-get update && apt-get install logstash
 RUN service logstash start
 
-ADD build/kibana_start.sh /etc/my_init.d/kibana_start.sh
-RUN chmod +x /etc/my_init.d/kibana_start.sh
+ADD build/logstash.conf /etc/logstash/conf.d/logstash.conf
+
+# setup startup
+ADD build/start.sh /etc/my_init.d/start.sh
+RUN chmod +x /etc/my_init.d/start.sh
 
 WORKDIR /root
 

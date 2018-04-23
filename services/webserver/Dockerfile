@@ -12,18 +12,19 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get update --fix-missing
-RUN apt-get install -y nano
+RUN apt-get install -y nano wget
 
 RUN echo 'LC_ALL=en_US.UTF-8' >> /etc/environment
 RUN echo 'LANG=en_US.UTF-8' >> /etc/environment
 RUN echo 'LC_CTYPE=en_US.UTF-8' >> /etc/environment
 ADD build/.bashrc /root/.bashrc
 
-# php-nginx
+# nginx
 RUN update-rc.d -f apache2 remove
 RUN apt-get install -y nginx-full
 ADD build/nginx.conf /etc/nginx/sites-available/default
 
+# php
 RUN apt-get install -y python-software-properties
 RUN add-apt-repository -y ppa:ondrej/php
 RUN apt-get update -y
@@ -40,9 +41,14 @@ RUN sed -i "s/;date.timezone =*/date.timezone = UTC/" /etc/php/7.2/fpm/php.ini
 RUN sed -i "s/;date.timezone =*/date.timezone = UTC/" /etc/php/7.2/cli/php.ini
 RUN sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.2/fpm/php.ini
 
-ADD build/nginx_start.sh /etc/my_init.d/nginx_start.sh
-ADD build/php-fpm_start.sh /etc/my_init.d/php-fpm_start.sh
-RUN chmod +x /etc/my_init.d/nginx_start.sh /etc/my_init.d/php-fpm_start.sh
+# awesant
+RUN echo "deb https://download.bloonix.de/repos/debian/ xenial main" | tee -a /etc/apt/sources.list.d/beats.list
+RUN apt-get update -y && apt-get install awesant -y --allow-unauthenticated
+ADD build/awesant/agent.conf /etc/awesant/agent.conf
+
+# setup startup
+ADD build/start.sh /etc/my_init.d/start.sh
+RUN chmod +x /etc/my_init.d/start.sh
 
 WORKDIR /root
 
