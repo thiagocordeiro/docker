@@ -59,7 +59,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e[1;36m\]docker@pgsql|\[\e[0m\]$PS1"
+    PS1="\[\e[1;36m\]docker@bitcoind|\[\e[0m\]$PS1"
     ;;
 *)
     ;;
@@ -97,3 +97,6 @@ fi
 #if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 #    . /etc/bash_completion
 #fi
+
+# stty cols 205
+# stty rows 50

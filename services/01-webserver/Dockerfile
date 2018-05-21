@@ -45,6 +45,7 @@ RUN sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.2/fpm/php.ini
 RUN echo "deb https://download.bloonix.de/repos/debian/ xenial main" | tee -a /etc/apt/sources.list.d/beats.list
 RUN apt-get update -y && apt-get install awesant -y --allow-unauthenticated
 ADD build/awesant/agent.conf /etc/awesant/agent.conf
+RUN mkdir /etc/awesant/inputs
 
 # setup startup
 ADD build/start.sh /etc/my_init.d/start.sh
