@@ -24,6 +24,7 @@ RUN apt-get install default-jdk -y
 RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
 RUN echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
 RUN apt-get update && apt-get -y install elasticsearch
+RUN echo -e "\nnetwork.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
 RUN service elasticsearch start
 
 # kibana
