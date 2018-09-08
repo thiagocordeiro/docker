@@ -20,28 +20,20 @@ ADD build/.bashrc /root/.bashrc
 # java
 RUN apt-get install default-jdk -y
 
-# elasticsearch
+# elk-repository
 RUN wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
-RUN echo "deb http://packages.elastic.co/elasticsearch/2.x/debian stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
-RUN apt-get update && apt-get -y install elasticsearch
-RUN echo -e "\nnetwork.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
-RUN service elasticsearch start
+RUN echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+RUN apt-get update
 
-# kibana
-RUN echo "deb http://packages.elastic.co/kibana/4.5/debian stable main" | tee -a /etc/apt/sources.list.d/kibana-4.5.x.list
-RUN apt-get update && apt-get -y install kibana
-RUN service kibana start
-
-# logstash
-RUN echo 'deb http://packages.elastic.co/logstash/2.2/debian stable main' | tee /etc/apt/sources.list.d/logstash-2.2.x.list
-RUN apt-get update && apt-get install logstash
-RUN service logstash start
-
+# elasticsearch
+RUN apt-get -y install elasticsearch kibana logstash
+RUN sed -i "s/#network.host: 192.168.0.1/network.host: 0.0.0.0/" /etc/elasticsearch/elasticsearch.yml
 ADD build/logstash.conf /etc/logstash/conf.d/logstash.conf
 
 # setup startup
 ADD build/start.sh /etc/my_init.d/start.sh
 RUN chmod +x /etc/my_init.d/start.sh
+RUN /etc/my_init.d/start.sh
 
 WORKDIR /root
 
