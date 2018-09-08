@@ -10,13 +10,3 @@ echo -e "${COLOR_CYAN}Stoping containers${COLOR_OFF}"
 docker stop $containers
 
 echo ""
-echo -e "${COLOR_CYAN}Removing loopback network aliases${COLOR_OFF}"
-for container in $containers
-do
-    name=$(docker inspect $container | jq '.[0] | .Name' | tr -d \"  | tr -d \/)
-    ip=$(docker inspect $container | jq '.[0] | .NetworkSettings.IPAddress' | tr -d \"  | tr -d \/)
-    sudo ifconfig lo0 -alias $ip
-    echo "${name}"
-done
-
-echo ""
