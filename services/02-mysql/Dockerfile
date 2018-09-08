@@ -30,6 +30,7 @@ RUN /root/setup/mysql_setup.sh
 
 ADD build/mysql_start.sh /etc/my_init.d/mysql_start.sh
 RUN chmod +x /etc/my_init.d/mysql_start.sh
+RUN /etc/my_init.d/mysql_start.sh
 
 WORKDIR /root
 
