@@ -28,6 +28,7 @@ RUN apt-get update
 # elasticsearch
 RUN apt-get -y install elasticsearch kibana logstash
 RUN sed -i "s/#network.host: 192.168.0.1/network.host: 0.0.0.0/" /etc/elasticsearch/elasticsearch.yml
+RUN sed -i "s/#server.host: \"localhost\"/server.host: \"0.0.0.0\"/" /etc/kibana/kibana.yml
 ADD build/logstash.conf /etc/logstash/conf.d/logstash.conf
 
 # setup startup
