@@ -2,6 +2,5 @@ kibana:
   container_name: kibana
   build: ./
   ports:
-    - "5044:5044"
     - "5601:5601"
     - "9200:9200"
